@@ -8,7 +8,7 @@
   <meta name="decorator" content="list"/>
 </head>
 <body title="日事清用户数据统计">
-<grid:grid id="rsqUserStatisticGridId" url="${adminPath}/userstatistic/rsquserstatistic/ajaxList">
+<grid:grid id="rsqUserStatisticGridId" url="${adminPath}/userstatistic/rsqusermanage/ajaxList">
 	<grid:column label="sys.common.key" hidden="true"   name="id" width="100"/>
     <grid:column label="teamId" hidden="true"   name="teamId" width="100"/>
 
@@ -24,19 +24,22 @@
     <grid:column label="公司人数"  name="teamNumber" />
     <grid:column label="数据来源"  name="dateFrom" />
     <grid:column label="渠道"  name="dateChannel" />
-
-    <shiro:hasAnyRoles name="admin,manager,employee">
-        <grid:column label="公司详情"  name="opt" formatter="button"/>
-        <grid:button title="公司详情" groupname="opt" function="openCompany" outclass="btn-warning" url="${adminPath}/common/rsqcommon/openCompany?id={id}" />
-    </shiro:hasAnyRoles>
-    <shiro:hasAnyRoles name="admin">
-        <grid:column label="更多"  name="opt2" formatter="button"/>
-        <grid:button title="更多" groupname="opt2" function="openUser"  outclass="btn-warning" url="${adminPath}/common/rsqcommon/openUser?id={id}" />
-    </shiro:hasAnyRoles>
-
+    <grid:column label="是否显示"  width="80" dict="sf" formatterClass="0:label label-danger;1:label label-success" name="accountLocked" />
     <grid:toolbar function="search"/>
 	<grid:toolbar function="reset"/>
 
+    <shiro:hasAnyRoles name="admin">
+        <grid:toolbar title="账号激活" btnclass="btn-info" icon="fa-file-code-o" function="userActive" url="${adminPath}/userstatistic/rsqusermanage/{id}/userActive"  />
+    </shiro:hasAnyRoles>
+    <shiro:hasAnyRoles name="admin">
+        <grid:toolbar title="账号注销" btnclass="btn-info" icon="fa-file-code-o" function="userFreeze" url="${adminPath}/userstatistic/rsqusermanage/{id}/userFreeze"  />
+    </shiro:hasAnyRoles>
+    <shiro:hasAnyRoles name="admin">
+        <grid:toolbar title="修改密码" btnclass="btn-info" icon="fa-file-code-o" function="updatePassword" url="${adminPath}/common/rsqcommon/{id}/updatePassword"  />
+    </shiro:hasAnyRoles>
+    <shiro:hasAnyRoles name="admin">
+        <grid:toolbar title="绑定账号" btnclass="btn-info" icon="fa-file-code-o" function="bindingAccount" url="${adminPath}/userstatistic/rsqusermanage/bindingAccount"  />
+    </shiro:hasAnyRoles>
 </grid:grid>
     <html:js  name="jquery,bootstrap,jquery-ui,peity,iCheck,sweetalert,Validform,jqgrid,layer"/>
     <script src="${staticPath}/modules/rishiqing/rsq_diy.js"></script>

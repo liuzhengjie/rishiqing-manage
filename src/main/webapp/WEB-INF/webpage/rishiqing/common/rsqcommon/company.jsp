@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/webpage/common/taglibs.jspf"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,9 +40,7 @@
 					<grid:column label="sys.common.key" hidden="true"   name="id" width="100"/>
 					<grid:column label="userId" hidden="true"   name="userId" width="100"/>
 					<grid:column label="teamId" hidden="true"   name="teamId" width="100"/>
-					<grid:column label="操作"  name="opt" formatter="button" width="70"/>
-					<grid:button title="登录查看" groupname="opt" function="openUser"  outclass="btn-success" url="${adminPath}/common/rsqcommon/openUser?id={id}" />
-<%--
+					<%--
 					<grid:button title="公司详情" groupname="opt" function="openCompany" outclass="btn-warning" url="${adminPath}/common/rsqcommon/openCompany?id={id}" />
 --%>
 
@@ -50,12 +49,18 @@
 					<grid:column label="手机号"  name="phone"  query="true"  queryMode="input"  condition="like" />
 					<grid:column label="注册时间"  name="registDate"  query="true"  queryMode="date"  condition="between" />
 					<grid:column label="注册时长"  name="registDay"/>
-					<grid:column label="最后登录时间"  name="lastLoginDate"  query="true"  queryMode="date"  condition="between" />
+					<grid:column label="最后登录时间"  name="lastLoginDate"/>
 
 					<grid:column label="公司名称"  name="teamName" />
 					<grid:column label="公司人数"  name="teamNumber" />
 					<grid:column label="数据来源"  name="dateFrom" />
 					<grid:column label="渠道"  name="dateChannel" />
+					<shiro:hasAnyRoles name="admin">
+						<grid:column label="更多"  name="opt" formatter="button" width="70"/>
+						<grid:button title="更多" groupname="opt" function="openUser"  outclass="btn-warning" url="${adminPath}/common/rsqcommon/openUser?id={id}" />
+					</shiro:hasAnyRoles>
+					<%--<grid:toolbar function="search"/>--%>
+					<%--<grid:toolbar function="reset"/>--%>
 				</grid:grid>
 			</div>
 		</div>
@@ -72,7 +77,7 @@
 	</div>
 </div>
 
-<html:js  name="jquery,bootstrap,jquery-ui,peity,iCheck,sweetalert,Validform,jqgrid"/>
+<html:js  name="jquery,bootstrap,jquery-ui,peity,iCheck,sweetalert,Validform,jqgrid,layer"/>
 <script src="${staticPath}/modules/rishiqing/rsq_diy.js"></script>
 </body>
 </html>

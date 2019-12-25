@@ -72,7 +72,7 @@
         WHERE
         u.account_id = a.id
         AND t.id = u.team_id
-        AND t.`name` = '北京创仕科锐信息技术有限公司'
+        AND t.`name` in ('北京创仕科锐信息技术有限公司', '日事清新兵营')
         AND t.is_display = TRUE
         <if test="params.email != null">
             AND a.email =  #{params.email}
@@ -95,15 +95,15 @@
         a.phone_number,
         a.avatar,
         a.`name`,
-        u.username
+        u.username,
+        a.id AS accountId
         FROM
-        USER u,
         account a,
-        team t
+        USER u
+        LEFT JOIN team t ON t.id = u.team_id
         WHERE
         u.account_id = a.id
-        AND t.id = u.team_id
-        AND t.is_display = TRUE
+        AND u.is_display = TRUE
         AND u.id = #{id}
     </select>
 
@@ -116,4 +116,8 @@
     <select id="getRsqPayProductByTeamVersionId" resultType="com.rishiqing.modules.common.entity.RsqPayProduct">
         SELECT * from pay_product WHERE team_version_id = #{teamVersionId}
     </select>
+
+    <update id="updateRsqPassword" parameterType="com.rishiqing.modules.common.entity.RsqUser" >
+        update account SET password = #{password} WHERE id = #{id}
+    </update>
 </mapper>

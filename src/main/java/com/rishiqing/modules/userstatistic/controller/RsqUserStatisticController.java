@@ -204,4 +204,5 @@ public class RsqUserStatisticController extends RsqBaseBeanController<RsqUserSta
     public RsqSystemStatistic mainPageInfo() {
         return rsqUserStatisticService.getMainPageInfo();
     }
+
 }
